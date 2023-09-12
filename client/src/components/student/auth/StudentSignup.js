@@ -63,12 +63,12 @@ export default function StudentSignup() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  
+                  name="sname"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="sname"
+                  label="Name"
                   autoFocus
                 />
               </Grid>
@@ -76,10 +76,40 @@ export default function StudentSignup() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="universityCode"
+                  label="University Code"
+                  name="universityCode"
+                  autoComplete="universityCode"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="regNo"
+                  label="Registration No"
+                  name="regNo"
+                  autoComplete="regNo"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="rollNo"
+                  label="Roll No"
+                  name="rollNo"
+                  autoComplete="rollNo"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phoneNo"
+                  label="Phone No"
+                  name="phoneNo"
+                  autoComplete="phoneNo"
                 />
               </Grid>
               <Grid item xs={12}>

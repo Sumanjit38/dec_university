@@ -13,32 +13,62 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TeacherSignin from './TeacherSignin'
+import { useState } from 'react';
+import { useHistory } from 'react-router';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function TeacherSignup() {
-  const handleSubmit = (event) => {
+
+  const history = useHistory()
+
+  const [user, setUser] = useState({
+    name : "",
+    universityCode : "",
+    email : "",
+    password : "",
+  });
+
+  // Handle Inputs
+  const handleInput = (event) => {
+    let name = event.target.name;
+    let value = event.target.value;
+
+    setUser({...user, [name]:value});
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const {name, universityCode, email, password} = user;
+    try {
+      const res = await fetch('/register', {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          name, universityCode, email, password
+        })
+      })
+
+      if(res.status === 400 || !res) {
+        window.alert("Already Used Details")
+      } else {
+        window.alert("Registered Successfully");
+        history.push('/login')
+      }
+
+    } catch (error) {
+        console.log(error);
+    }
+    /*const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
-    });
+    });*/
   };
 
   return (
@@ -59,27 +89,32 @@ export default function TeacherSignup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} method="POST" sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
+                  value={user.name}
+                  onChange={handleInput}
+
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="universityCode"
+                  label="University Code"
+                  name="universityCode"
+                  autoComplete="universityCode"
+                  value={user.universityCode}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -90,6 +125,8 @@ export default function TeacherSignup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={user.email}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -101,6 +138,8 @@ export default function TeacherSignup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={user.password}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>

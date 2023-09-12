@@ -13,32 +13,51 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TeacherSignup from './TeacherSignup'
+import { useState } from 'react';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function TeacherSignin() {
-  const handleSubmit = (event) => {
+
+  const [user, setUser] = useState({
+    email : "",
+    password : "",
+  });
+
+  const handleChange = (event) => {
+    let name = event.target.name;
+    let value = event.target.value;
+
+    setUser({...user, [name]:value});
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const {email, password} = user;
+    try {
+      const res = await fetch('/login', {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          email, password
+        })
+      })
+
+      if(res.status === 400 || !res) {
+        window.alert("Invalid")
+      } else {
+        window.alert("Login Successfull");
+        window.location.reload();
+      }
+
+    } catch (error) {
+        console.log(error);
+    }
   };
 
   return (
@@ -69,6 +88,9 @@ export default function TeacherSignin() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={user.email}
+              onChange={handleChange}
+
             />
             <TextField
               margin="normal"
@@ -79,6 +101,9 @@ export default function TeacherSignin() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={user.password}
+              onChange={handleChange}
+
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

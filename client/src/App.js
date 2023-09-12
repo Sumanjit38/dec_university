@@ -18,7 +18,8 @@ import StudentSignup from "./components/student/auth/StudentSignup"
 import UniversitySignup from "./components/university/auth/UniversitySignup"
 import StaffSignup from "./components/staff/auth/StaffSignup"
 import Btech from './components/allSubjects/data/Btech'
-
+//import Paperbase from './components/teacher/pages/dashboard/Paperbase'
+//import Dashboard from './components/teacher/pages/dashboard/Dashboard'
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route exact path='/university_signin' component={UniversitySignin} />
           <Route exact path='/university_signup' component={UniversitySignup} />
           <Route exact path='/teacher_signin' component={TeacherSignin} />
+          
           <Route exact path='/teacher_signup' component={TeacherSignup} />
           <Route exact path='/student_signin' component={StudentSignin} />
           <Route exact path='/student_signup' component={StudentSignup} />
