@@ -14,19 +14,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TeacherSignin from './StaffSignin'
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -61,25 +48,36 @@ export default function StaffSignup() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
+                  autoComplete="staffName"
+                  name="staffName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="staffName"
+                  label="Staff Name"
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="universityCode"
+                  label="University Code"
+                  name="universityCode"
+                  autoComplete="universityCode"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phoneNo"
+                  label="Phone No"
+                  name="phoneNo"
+                  autoComplete="phoneNo"
+                  //onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>

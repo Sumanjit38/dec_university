@@ -13,32 +13,65 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import StudentSignin from './StudentSignin'
+import { useState } from 'react';
+import { useHistory } from 'react-router';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function StudentSignup() {
-  const handleSubmit = (event) => {
+
+  const history = useHistory()
+
+  const [user, setUser] = useState({
+    sname : "",
+    universityCode : "",
+    regNo : "",
+    rollNo : "",
+    phoneNo : "",
+    email : "",
+    password : "",
+  });
+
+  // Handle Inputs
+  const handleInput = (event) => {
+    let name = event.target.name;
+    let value = event.target.value;
+
+    setUser({...user, [name]:value});
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const {sname : sname, universityCode : universityCode, regNo : regNo, rollNo : rollNo, phoneNo : phoneNo, email : email, password : password} = user;
+    try {
+      const res = await fetch('/register', {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({
+          sname : sname, universityCode : universityCode, regNo : regNo, rollNo : rollNo, phoneNo : phoneNo, email : email, password : password
+        })
+      })
+
+      if(res.status === 400 || !res) {
+        window.alert("Already Used Details")
+      } else {
+        window.alert("Registered Successfully");
+        history.push('/login')
+      }
+
+    } catch (error) {
+        console.log(error);
+    }
+    /*const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
-    });
+    });*/
   };
 
   return (
@@ -59,9 +92,9 @@ export default function StudentSignup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} method="POST" sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
                   
                   name="sname"
@@ -70,9 +103,10 @@ export default function StudentSignup() {
                   id="sname"
                   label="Name"
                   autoFocus
+                  onChange={handleInput}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
                   required
                   fullWidth
@@ -80,6 +114,7 @@ export default function StudentSignup() {
                   label="University Code"
                   name="universityCode"
                   autoComplete="universityCode"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -90,6 +125,7 @@ export default function StudentSignup() {
                   label="Registration No"
                   name="regNo"
                   autoComplete="regNo"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,6 +136,7 @@ export default function StudentSignup() {
                   label="Roll No"
                   name="rollNo"
                   autoComplete="rollNo"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -110,6 +147,7 @@ export default function StudentSignup() {
                   label="Phone No"
                   name="phoneNo"
                   autoComplete="phoneNo"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -120,6 +158,7 @@ export default function StudentSignup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -131,12 +170,13 @@ export default function StudentSignup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="I accept all terms & conditions."
                 />
               </Grid>
             </Grid>

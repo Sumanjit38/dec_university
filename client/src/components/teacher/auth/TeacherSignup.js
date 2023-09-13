@@ -91,7 +91,7 @@ export default function TeacherSignup() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} method="POST" sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
                   
                   name="name"
@@ -105,7 +105,7 @@ export default function TeacherSignup() {
 
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} >
                 <TextField
                   required
                   fullWidth
@@ -145,7 +145,7 @@ export default function TeacherSignup() {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="I accept all terms & conditions."
                 />
               </Grid>
             </Grid>
