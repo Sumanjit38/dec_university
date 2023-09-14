@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TeacherSignup from './TeacherSignup'
 import { useState } from 'react';
+import {useHistory} from 'react-router'
 
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -21,6 +22,8 @@ import { useState } from 'react';
 const defaultTheme = createTheme();
 
 export default function TeacherSignin() {
+
+  const history = useHistory()
 
   const [user, setUser] = useState({
     email : "",
@@ -53,6 +56,7 @@ export default function TeacherSignin() {
       } else {
         window.alert("Login Successfull");
         window.location.reload();
+        history.push('/');
       }
 
     } catch (error) {

@@ -17,7 +17,8 @@ import StaffSignin from './components/staff/auth/StaffSignin'
 import StudentSignup from "./components/student/auth/StudentSignup"
 import UniversitySignup from "./components/university/auth/UniversitySignup"
 import StaffSignup from "./components/staff/auth/StaffSignup"
-import Btech from './components/allSubjects/data/Btech'
+//import Btech from './components/allSubjects/data/Btech'
+import Logout from "./components/common/header/Logout"
 //import Paperbase from './components/teacher/pages/dashboard/Paperbase'
 //import Dashboard from './components/teacher/pages/dashboard/Dashboard'
 
@@ -44,7 +45,6 @@ function App() {
           <Route exact path='/staff_signin' component={StaffSignin} />
           <Route exact path='/staff_signup' component={StaffSignup} />
           <Route exact path='/contact' component={Contact} />
-
           
           
         </Switch>
