@@ -26,7 +26,7 @@ export default function TeacherSignup() {
   const history = useHistory()
 
   const [user, setUser] = useState({
-    name : "",
+    tname : "",
     universityCode : "",
     email : "",
     password : "",
@@ -42,15 +42,15 @@ export default function TeacherSignup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const {name, universityCode, email, password} = user;
+    const {tname, universityCode, email, password} = user;
     try {
-      const res = await fetch('/register', {
+      const res = await fetch('/teacher_signup', {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
         },
         body : JSON.stringify({
-          name, universityCode, email, password
+          tname, universityCode, email, password
         })
       })
 
@@ -64,11 +64,7 @@ export default function TeacherSignup() {
     } catch (error) {
         console.log(error);
     }
-    /*const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });*/
+
   };
 
   return (
@@ -94,13 +90,13 @@ export default function TeacherSignup() {
               <Grid item xs={12} >
                 <TextField
                   
-                  name="name"
+                  name="tname"
                   required
                   fullWidth
-                  id="name"
+                  id="tname"
                   label="Name"
                   autoFocus
-                  value={user.name}
+                  value={user.tname}
                   onChange={handleInput}
 
                 />

@@ -23,7 +23,7 @@ const defaultTheme = createTheme();
 
 export default function StudentSignup() {
 
-  const history = useHistory()
+  //const history = useHistory()
 
   const [user, setUser] = useState({
     sname : "",
@@ -37,42 +37,31 @@ export default function StudentSignup() {
 
   // Handle Inputs
   const handleInput = (event) => {
-    let name = event.target.name;
-    let value = event.target.value;
+    //let name = event.target.name;
+    //let value = event.target.value;
 
-    setUser({...user, [name]:value});
+    setUser({...user, [event.target.name]:event.target.value});
   }
 
+  // Handle Submit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const {sname : sname, universityCode : universityCode, regNo : regNo, rollNo : rollNo, phoneNo : phoneNo, email : email, password : password} = user;
-    try {
-      const res = await fetch('/register', {
-        method : "POST",
-        headers : {
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-          sname : sname, universityCode : universityCode, regNo : regNo, rollNo : rollNo, phoneNo : phoneNo, email : email, password : password
-        })
-      })
+    const response = await fetch("/register/student", {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body:JSON.stringify({sname:user.sname, universityCode:user.universityCode, regNo:user.regNo, rollNo:user.rollNo, phoneNo:user.phoneNo, email:user.email, password:user.password})
 
-      if(res.status === 400 || !res) {
-        window.alert("Already Used Details")
-      } else {
-        window.alert("Registered Successfully");
-        history.push('/login')
-      }
+    })
+    const json = await response.json()
+    console.log(json);
 
-    } catch (error) {
-        console.log(error);
+    if(!json.success) {
+      alert("Enter Valid Credentials")
     }
-    /*const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });*/
-  };
+    
+ };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -103,6 +92,7 @@ export default function StudentSignup() {
                   id="sname"
                   label="Name"
                   autoFocus
+                  value={user.sname}
                   onChange={handleInput}
                 />
               </Grid>
@@ -114,6 +104,7 @@ export default function StudentSignup() {
                   label="University Code"
                   name="universityCode"
                   autoComplete="universityCode"
+                  value={user.universityCode}
                   onChange={handleInput}
                 />
               </Grid>
@@ -125,6 +116,7 @@ export default function StudentSignup() {
                   label="Registration No"
                   name="regNo"
                   autoComplete="regNo"
+                  value={user.regNo}
                   onChange={handleInput}
                 />
               </Grid>
@@ -136,6 +128,7 @@ export default function StudentSignup() {
                   label="Roll No"
                   name="rollNo"
                   autoComplete="rollNo"
+                  value={user.rollNo}
                   onChange={handleInput}
                 />
               </Grid>
@@ -147,6 +140,7 @@ export default function StudentSignup() {
                   label="Phone No"
                   name="phoneNo"
                   autoComplete="phoneNo"
+                  value={user.phoneNo}
                   onChange={handleInput}
                 />
               </Grid>
@@ -158,6 +152,7 @@ export default function StudentSignup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={user.email}
                   onChange={handleInput}
                 />
               </Grid>
@@ -170,6 +165,7 @@ export default function StudentSignup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={user.password}
                   onChange={handleInput}
                 />
               </Grid>

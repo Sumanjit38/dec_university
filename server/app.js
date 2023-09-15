@@ -2,33 +2,67 @@ const dotenv = require('dotenv');
 const express = require('express');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-//const cookieParser = require('cookie-parser');
-
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
+// Configure ENV File & Require Connection File
 dotenv.config({path : './config.env'});
 require('./db/conn');
 const port = process.env.PORT
 
 // Require Model
-const Users = require('./models/userSchema');
-const cookieParser = require('cookie-parser');
+//const Users = require('./models/userSchema');
+//const cookieParser = require('cookie-parser');
 //const authenticate = require('./middleware/authenticate')
 
+
 app.use(express.json());
-app.use(express.urlencoded({extended : false}));
-app.use(cookieParser());
+app.use('/register', require('./routes/Register'));
+//app.use(express.urlencoded({extended : false}));
+//app.use(cookieParser());
 
 app.get('/', (req, res) => {
     res.send('Hello');
 })
 
-// Registration
-app.post('/register', async (req, res) => {
+/*
+// Teacher Signup
+app.post('/teacher_signup', async (req, res) => {
     try {
         // Get body or data
-        const name = req.body.name;
+        //const name = req.body.name;
+        const tname = req.body.tname;
+        const universityCode = req.body.universityCode;
+        //const regNo = req.body.regNo;
+        //const rollNo = req.body.rollNo;
+        //const phoneNo = req.body.phoneNo;
+        const email = req.body.email;
+        const password = req.body.password;
+
+        const createUser = new Users({
+            tname : tname,
+            universityCode : universityCode,
+            email : email,
+            password : password
+        });
+
+        const created = await createUser.save();
+        console.log(created);
+        res.status(200).send("Registered");
+
+    } catch (error) {
+        res.status(400).send(error);
+    }
+})
+*/
+
+/*
+// Student Signup
+app.post('/teacher_signup', async (req, res) => {
+    try {
+        // Get body or data
+        const tname = req.body.tname;
         const sname = req.body.sname;
         const universityCode = req.body.universityCode;
         const regNo = req.body.regNo;
@@ -38,7 +72,7 @@ app.post('/register', async (req, res) => {
         const password = req.body.password;
 
         const createUser = new Users({
-            name : name,
+            tname : tname,
             sname : sname,
             universityCode : universityCode,
             regNo : regNo,
@@ -56,6 +90,7 @@ app.post('/register', async (req, res) => {
         res.status(400).send(error);
     }
 })
+
 
 // Login user
 app.post('/login', async (req, res) => {

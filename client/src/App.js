@@ -20,7 +20,7 @@ import StaffSignup from "./components/staff/auth/StaffSignup"
 //import Btech from './components/allSubjects/data/Btech'
 import Logout from "./components/common/header/Logout"
 //import Paperbase from './components/teacher/pages/dashboard/Paperbase'
-//import Dashboard from './components/teacher/pages/dashboard/Dashboard'
+import TeacherDashboard from './components/teacher/pages/dashboard/TeacherDashboard'
 
 function App() {
   return (
@@ -45,6 +45,7 @@ function App() {
           <Route exact path='/staff_signin' component={StaffSignin} />
           <Route exact path='/staff_signup' component={StaffSignup} />
           <Route exact path='/contact' component={Contact} />
+          <Route exact path='/teacher_dashboard' component={TeacherDashboard} />
           
           
         </Switch>

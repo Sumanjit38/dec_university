@@ -14,7 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import StudentSignup from './StudentSignup'
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router';
+import {useHistory} from 'react-router-dom';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -22,43 +23,42 @@ const defaultTheme = createTheme();
 
 export default function StudentSignin() {
 
+  let history = useHistory()
   const [user, setUser] = useState({
     email : "",
     password : "",
   });
 
-  const handleChange = (event) => {
-    let name = event.target.name;
-    let value = event.target.value;
-
-    setUser({...user, [name]:value});
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const {email, password} = user;
-    try {
-      const res = await fetch('/login', {
+    // Handle Inputs
+    const handleInput = (event) => {
+      //let name = event.target.name;
+      //let value = event.target.value;
+  
+      setUser({...user, [event.target.name]:event.target.value});
+    }
+  
+    // Handle Submit
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const response = await fetch("/register/student-login", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
         },
-        body : JSON.stringify({
-          email, password
-        })
+        body:JSON.stringify({email:user.email, password:user.password})
+  
       })
-
-      if(res.status === 400 || !res) {
-        window.alert("Invalid")
-      } else {
-        window.alert("Login Successfull");
-        window.location.reload();
+      const json = await response.json()
+      console.log(json);
+  
+      if(!json.success) {
+        alert("Enter Valid Credentials")
       }
-
-    } catch (error) {
-        console.log(error);
-    }
-  };
+      if(json.success) {
+        history.push('/');
+      }
+      
+   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -88,7 +88,7 @@ export default function StudentSignin() {
               name="email"
               autoComplete="email"
               autoFocus
-              onChange={handleChange}
+              onChange={handleInput}
             />
             <TextField
               margin="normal"
@@ -99,7 +99,7 @@ export default function StudentSignin() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={handleChange}
+              onChange={handleInput}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
