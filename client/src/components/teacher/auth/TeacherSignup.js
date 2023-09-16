@@ -28,44 +28,38 @@ export default function TeacherSignup() {
   const [user, setUser] = useState({
     tname : "",
     universityCode : "",
+    phoneNo : "",
     email : "",
     password : "",
   });
 
   // Handle Inputs
   const handleInput = (event) => {
-    let name = event.target.name;
-    let value = event.target.value;
-
-    setUser({...user, [name]:value});
+    setUser({...user, [event.target.name]:event.target.value});
   }
 
+  // Handle Submit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const {tname, universityCode, email, password} = user;
-    try {
-      const res = await fetch('/teacher_signup', {
-        method : "POST",
-        headers : {
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify({
-          tname, universityCode, email, password
-        })
-      })
+    const response = await fetch("/register/teacher", {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body:JSON.stringify({tname:user.tname, universityCode:user.universityCode, phoneNo:user.phoneNo, email:user.email, password:user.password})
 
-      if(res.status === 400 || !res) {
-        window.alert("Already Used Details")
-      } else {
-        window.alert("Registered Successfully");
-        history.push('/login')
-      }
+    })
+    const json = await response.json()
+    console.log(json);
 
-    } catch (error) {
-        console.log(error);
+    if(!json.success) {
+      alert("Enter Valid Credentials")
     }
-
-  };
+    if(json.success) {
+      history.push('/teacher_signin');
+    }
+    
+ };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -110,6 +104,18 @@ export default function TeacherSignup() {
                   name="universityCode"
                   autoComplete="universityCode"
                   value={user.universityCode}
+                  onChange={handleInput}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phoneNo"
+                  label="Phone No"
+                  name="phoneNo"
+                  autoComplete="phoneNo"
+                  value={user.phoneNo}
                   onChange={handleInput}
                 />
               </Grid>

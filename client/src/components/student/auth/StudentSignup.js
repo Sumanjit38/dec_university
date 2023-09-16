@@ -16,14 +16,11 @@ import StudentSignin from './StudentSignin'
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function StudentSignup() {
 
-  //const history = useHistory()
+  const history = useHistory()
 
   const [user, setUser] = useState({
     sname : "",
@@ -37,9 +34,6 @@ export default function StudentSignup() {
 
   // Handle Inputs
   const handleInput = (event) => {
-    //let name = event.target.name;
-    //let value = event.target.value;
-
     setUser({...user, [event.target.name]:event.target.value});
   }
 
@@ -59,6 +53,9 @@ export default function StudentSignup() {
 
     if(!json.success) {
       alert("Enter Valid Credentials")
+    }
+    if(json.success) {
+      history.push('/student_signin');
     }
     
  };
@@ -201,3 +198,4 @@ export default function StudentSignup() {
     </ThemeProvider>
   );
 }
+

@@ -11,6 +11,14 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : null,
     },
+    staffName : {
+        type : String,
+        required : null,
+    },
+    uname : {
+        type : String,
+        required : null,
+    },
     universityCode : {
         type : String,
         required : null,
@@ -18,18 +26,15 @@ const userSchema = new mongoose.Schema({
     },
     regNo : {
         type : String,
-        required : null,
-        unique : true,
+        required : null
     },
     rollNo : {
         type : String,
-        required : null,
-        unique : true,
+        required : null
     },
     phoneNo : {
         type : String,
-        required : null,
-        unique : true,
+        required : null
     },
     email : {
         type : String,
@@ -75,3 +80,4 @@ userSchema.methods.generateToken = async function() {
 const Users = new mongoose.model("USER", userSchema);
 
 module.exports = Users;
+

@@ -12,21 +12,53 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import TeacherSignin from './StaffSignin'
+import TeacherSignin from './StaffSignin';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function StaffSignup() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+
+const history = useHistory()
+
+const [user, setUser] = useState({
+  staffName : "",
+  universityCode : "",
+  phoneNo : "",
+  email : "",
+  password : "",
+});
+
+// Handle Inputs
+const handleInput = (event) => {
+  setUser({...user, [event.target.name]:event.target.value});
+}
+
+// Handle Submit
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const response = await fetch("/register/staff", {
+    method : "POST",
+    headers : {
+      "Content-Type" : "application/json"
+    },
+    body:JSON.stringify({staffName:user.staffName, universityCode:user.universityCode, phoneNo:user.phoneNo, email:user.email, password:user.password})
+
+  })
+  const json = await response.json()
+  console.log(json);
+
+  if(!json.success) {
+    alert("Enter Valid Credentials")
+  }
+  if(json.success) {
+    history.push('/staff_signin');
+  }
+  
+};
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -57,6 +89,7 @@ export default function StaffSignup() {
                   id="staffName"
                   label="Staff Name"
                   autoFocus
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12} >
@@ -67,6 +100,7 @@ export default function StaffSignup() {
                   label="University Code"
                   name="universityCode"
                   autoComplete="universityCode"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -77,7 +111,7 @@ export default function StaffSignup() {
                   label="Phone No"
                   name="phoneNo"
                   autoComplete="phoneNo"
-                  //onChange={handleInput}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -88,6 +122,7 @@ export default function StaffSignup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -99,6 +134,7 @@ export default function StaffSignup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>

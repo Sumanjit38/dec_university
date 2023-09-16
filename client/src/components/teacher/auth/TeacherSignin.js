@@ -23,48 +23,39 @@ const defaultTheme = createTheme();
 
 export default function TeacherSignin() {
 
-  
-
-  const history = useHistory()
-
+  let history = useHistory()
   const [user, setUser] = useState({
     email : "",
     password : "",
   });
 
-  const handleChange = (event) => {
-    let name = event.target.name;
-    let value = event.target.value;
-
-    setUser({...user, [name]:value});
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const {email, password} = user;
-    try {
-      const res = await fetch('/login', {
+    // Handle Inputs
+    const handleInput = (event) => {
+      setUser({...user, [event.target.name]:event.target.value});
+    }
+  
+    // Handle Submit
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const response = await fetch("/register/teacher-login", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
         },
-        body : JSON.stringify({
-          email, password
-        })
+        body:JSON.stringify({email:user.email, password:user.password})
+  
       })
-
-      if(res.status === 400 || !res) {
-        window.alert("Invalid")
-      } else {
-        window.alert("Login Successfull");
-        window.location.reload();
+      const json = await response.json()
+      console.log(json);
+  
+      if(!json.success) {
+        alert("Enter Valid Credentials")
+      }
+      if(json.success) {
         history.push('/');
       }
-
-    } catch (error) {
-        console.log(error);
-    }
-  };
+      
+   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -95,7 +86,7 @@ export default function TeacherSignin() {
               autoComplete="email"
               autoFocus
               value={user.email}
-              onChange={handleChange}
+              onChange={handleInput}
 
             />
             <TextField
@@ -108,7 +99,7 @@ export default function TeacherSignin() {
               id="password"
               autoComplete="current-password"
               value={user.password}
-              onChange={handleChange}
+              onChange={handleInput}
 
             />
             <FormControlLabel
@@ -143,3 +134,4 @@ export default function TeacherSignin() {
     </ThemeProvider>
   );
 }
+
