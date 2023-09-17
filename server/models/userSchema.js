@@ -56,8 +56,9 @@ const userSchema = new mongoose.Schema({
 
 })
 
+/*
 // Hashing Password to Secure
-/*userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function(next) {
     if(this.isModified('password')){
         this.password = bcryptjs.hashSync(this.password, 10)
     }
@@ -77,6 +78,7 @@ userSchema.methods.generateToken = async function() {
     }
 }
 */
+
 const Users = new mongoose.model("USER", userSchema);
 
 module.exports = Users;
