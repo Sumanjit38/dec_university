@@ -124,24 +124,24 @@ router.post("/student-login",[
         let email = req.body.email;
 
         try {
-            let userData1 = await Users.findOne({email});
-            if(!userData1) {
+            let userData = await Users.findOne({email});
+            if(!userData) {
                 return res.status(400).json({ errors: "Try login with correct credentials"})
             }
 
-            const passCompare = await bcrypt.compare(req.body.password, userData1.password)
+            const passCompare = await bcrypt.compare(req.body.password, userData.password)
 
             if(!passCompare) {
                 return res.status(400).json({ errors: "Try login with correct credentials"})
             }
-            const data1 = {
+            const data = {
                 user : {
-                    id: userData1.id
+                    id: userData.id
                 }
             } 
 
-            const authToken1 = jwt.sign(data1, jwtSecret)
-            return res.json({ success: true, authToken1:authToken1})
+            const authToken = jwt.sign(data, jwtSecret)
+            return res.json({ success: true, authToken:authToken})
         
         } catch (error) {
             console.log(error)

@@ -21,6 +21,7 @@ import StaffSignup from "./components/staff/auth/StaffSignup"
 //import Logout from "./components/common/header/Logout"
 //import Paperbase from './components/teacher/pages/dashboard/Paperbase'
 import TeacherDashboard from './components/teacher/pages/TeacherDashboard'
+import StudentDashboard from './components/student/pages/StudentDashboard'
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
           <Route exact path='/staff_signup' component={StaffSignup} />
           <Route exact path='/contact' component={Contact} />
           <Route exact path='/teacher_dashboard' component={TeacherDashboard} />
-          
+          <Route exact path='/student_dashboard' component={StudentDashboard} />
           
         </Switch>
         <Footer />    

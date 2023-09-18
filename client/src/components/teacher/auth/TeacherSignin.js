@@ -54,7 +54,7 @@ export default function TeacherSignin() {
       if(json.success) {
         localStorage.setItem("authToken", json.authToken);
         console.log(localStorage.getItem("authToken"))
-        history.push('/');
+        history.push('/teacher_dashboard');
       }
       
    };

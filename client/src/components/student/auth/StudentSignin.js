@@ -55,9 +55,9 @@ export default function StudentSignin() {
         alert("Enter Valid Credentials")
       }
       if(json.success) {
-        localStorage.setItem("authToken1", json.authToken1);
-        console.log(localStorage.getItem("authToken1"))
-        history.push('/');
+        localStorage.setItem("authToken", json.authToken);
+        console.log(localStorage.getItem("authToken"))
+        history.push('/student_dashboard');
       }
       
    };
