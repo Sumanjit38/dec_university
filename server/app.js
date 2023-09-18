@@ -9,6 +9,7 @@ const app = express();
 // Configure ENV File & Require Connection File
 dotenv.config({path : './config.env'});
 require('./db/conn');
+//mongoDB();
 const port = process.env.PORT
 
 // Require Model

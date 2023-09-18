@@ -43,13 +43,6 @@ const Header = () => {
               <Link to='/contact'>Contact</Link>
             </li>
 
-            {(localStorage.getItem("authToken")) ?
-              <li>
-                <Link to='/contact'>My Profile</Link>
-              </li>
-              
-            : ""}
-
           </ul>
           {(!localStorage.getItem("authToken")) ?
 

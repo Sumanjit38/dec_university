@@ -9,7 +9,7 @@ const SideNavBar = () => {
 			icon: "icons/grid.svg",
 		},
 		{
-			text: "Admin Profile",
+			text: "Teacher Profile",
 			icon: "icons/user.svg",
 		},
 		{

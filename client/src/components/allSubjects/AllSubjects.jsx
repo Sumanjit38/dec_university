@@ -1,3 +1,4 @@
+/*
 import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -29,9 +30,9 @@ export default function SelectLabels() {
           </MenuItem>
           <MenuItem value={10}>CSE</MenuItem>
           {/*<MenuItem value={20}>IT</MenuItem>
-          <MenuItem value={30}>CE</MenuItem>*/}
+          <MenuItem value={30}>CE</MenuItem>*/
           
-        </Select>
+        /*</Select>
         <FormHelperText></FormHelperText>
       </FormControl>
       <FormControl sx={{ m: 4, minWidth: 120 }}>
@@ -46,8 +47,8 @@ export default function SelectLabels() {
           </MenuItem>
           <MenuItem value={10}>2018-2021</MenuItem>
           {/*<MenuItem value={10}>2019-2022</MenuItem>
-          <MenuItem value={10}>2020-2023</MenuItem>*/}
-        </Select>
+          <MenuItem value={10}>2020-2023</MenuItem>*/
+/*        </Select>
         <FormHelperText></FormHelperText>
       </FormControl>
 
@@ -55,3 +56,33 @@ export default function SelectLabels() {
     </div>
   );
 }
+*/
+
+import React, {Component, useEffect, useState} from 'react'
+
+
+const AllSubjects = () => {
+  return (
+    <div className='auth-wrapper'>
+      <div className='auth-inner'>
+      <table style={{ width: 1660}}>
+        <tr>
+          <th>Department</th>
+          <th>Course</th>
+          <th>Session</th>
+          <th>Paper Code</th>
+          <th>Paper Name</th>
+          <th>Credit</th>
+          <th>Mid Sem Marks</th>
+          <th>Lab Assignment Marks</th>
+          <th>End Sem Marks</th>
+          <th>End Sem Lab Marks</th>
+          <th>Total Marks</th>
+        </tr>
+      </table>
+      </div>
+    </div>
+  )
+}
+
+export default AllSubjects
