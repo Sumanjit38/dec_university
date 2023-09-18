@@ -1,10 +1,22 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import Head from "./Head"
 import "./header.css"
 
 const Header = () => {
   const [click, setClick] = useState(false)
+
+  const history = useHistory();
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    history.push("/teacher_signin")
+  }
+
+  /*const handleDashboard = () => {
+    localStorage.removeItem("authToken");
+    history.push("/teacher_dashboard")
+  }*/
 
   return (
     <>
@@ -28,22 +40,43 @@ const Header = () => {
               <Link to='/policy'>Policy</Link>
             </li>
             <li>
-              <Link to='/university_signin'>University</Link>
-            </li>
-            <li>
-              <Link to='/teacher_signin'>Teacher</Link>
-            </li>
-            <li>
-              <Link to='/student_signin'>Student</Link>
-            </li>
-            <li>
-              <Link to='/staff_signin'>Staff</Link>
-            </li>
-            <li>
               <Link to='/contact'>Contact</Link>
             </li>
-            
+
+            {(localStorage.getItem("authToken")) ?
+              <li>
+                <Link to='/contact'>My Profile</Link>
+              </li>
+              
+            : ""}
+
           </ul>
+          {(!localStorage.getItem("authToken")) ?
+
+          <div className='d-flex'>
+
+            <Link to='/university_signin'>University</Link>
+            
+            <Link to='/teacher_signin'>Teacher</Link>
+            
+            <Link to='/student_signin'>Student</Link>
+            
+            <Link to='/staff_signin'>Staff</Link>
+            
+          </div>
+            :
+          <div>
+            <li>
+              <Link to='/teacher_dashboard'>TeacherDashboard</Link>
+            </li>
+            
+            <div className="btn bg-white text-success mx-2" onClick={handleLogout}>
+              Logout
+            </div>
+
+          </div>
+            
+          }
           
           <div className='start'>
             <div className='button'>GET CERTIFICATE</div>
