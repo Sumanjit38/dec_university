@@ -162,13 +162,16 @@ router.post("/staff", [
             return res.status(400).json({ errors: errors.array() });
         }
 
+        const salt = await bcrypt.genSalt(10);
+        let secPassword =  await bcrypt.hash(req.body.password, salt)
+
         try {
             await Users.create({
                 staffName : req.body.staffName,
                 universityCode : req.body.universityCode,
                 phoneNo : req.body.phoneNo,
                 email : req.body.email,
-                password : req.body.password
+                password : secPassword
             }).then(res.json({success:true}))
         
         } catch (error) {
@@ -177,7 +180,7 @@ router.post("/staff", [
     }
 })
 
-// Student Login
+// Staff Login
 router.post("/staff-login",[
     body('email').isEmail(),
     body('password').isLength({ min: 5})] 
@@ -194,10 +197,20 @@ router.post("/staff-login",[
             if(!userData) {
                 return res.status(400).json({ errors: "Try login with correct credentials"})
             }
-            if(req.body.password !== userData.password) {
+
+            const passCompare = await bcrypt.compare(req.body.password, userData.password)
+
+            if(!passCompare) {
                 return res.status(400).json({ errors: "Try login with correct credentials"})
+            }
+            const data = {
+                user : {
+                    id: userData.id
+                }
             } 
-            return res.json({ success: true})
+
+            const authToken = jwt.sign(data, jwtSecret)
+            return res.json({ success: true, authToken:authToken})
         
         } catch (error) {
             console.log(error)

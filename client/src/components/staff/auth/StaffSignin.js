@@ -55,7 +55,9 @@ export default function StaffSignin() {
         alert("Enter Valid Credentials")
       }
       if(json.success) {
-        history.push('/');
+        localStorage.setItem("authToken", json.authToken);
+        console.log(localStorage.getItem("authToken"))
+        history.push('/staff_dashboard');
       }
       
    };
@@ -133,3 +135,4 @@ export default function StaffSignin() {
     </ThemeProvider>
   );
 }
+
