@@ -47,14 +47,22 @@ return (
         </ul>
 
         {(!localStorage.getItem("authToken")) ?
-          <div className='d-flex'>
-            <Link to='/university_signin'>University</Link>
-            <Link to='/teacher_signin'>Teacher</Link>
-            <Link to='/student_signin'>Student</Link>
-            <Link to='/staff_signin'>Staff</Link>
+          <div className='flexSB'>
+            <li>
+              <Link to='/university_signin'>University</Link>
+            </li>
+            <li>
+              <Link to='/teacher_signin'>Teacher</Link>
+            </li>
+            <li>
+              <Link to='/student_signin'>Student</Link>
+            </li>
+            <li>
+              <Link to='/staff_signin'>Staff</Link>
+            </li>
           </div>
         :
-          <div className="btn bg-white text-success mx-2" onClick={handleLogout}>
+          <div className="flexSB" onClick={handleLogout}>
             Logout
           </div>
         }

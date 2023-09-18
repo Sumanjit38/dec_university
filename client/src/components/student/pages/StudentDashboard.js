@@ -6,7 +6,7 @@ const SideNavBar = () => {
 	const menuItems = [
 		{
 			text: "Dashboard",
-			icon: "./icons/grid.svg",
+			icon: "../public/icons/grid.svg",
 		},
 		{
 			text: "Student Profile",
