@@ -23,6 +23,7 @@ import StaffSignup from "./components/staff/auth/StaffSignup"
 import TeacherDashboard from './components/teacher/pages/TeacherDashboard'
 import StudentDashboard from './components/student/pages/StudentDashboard'
 import StaffDashboard from './components/staff/pages/StaffDashboard'
+import UniversityDashboard from './components/university/pages/UniversityDashboard'
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route exact path='/teacher_dashboard' component={TeacherDashboard} />
           <Route exact path='/student_dashboard' component={StudentDashboard} />
           <Route exact path='/staff_dashboard' component={StaffDashboard} />
+          <Route exact path='/university_dashboard' component={UniversityDashboard} />
           
         </Switch>
         <Footer />    

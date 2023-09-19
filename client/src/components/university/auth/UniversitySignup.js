@@ -13,33 +13,52 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TeacherSignin from './UniversitySignin'
+import { useState } from 'react';
+import { useHistory } from 'react-router';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function UniversitySignup() {
-  const handleSubmit = (event) => {
+  
+  const history = useHistory()
+
+  const [user, setUser] = useState({
+    uname : "",
+    universityCode : "",
+    email : "",
+    password : ""
+  });
+
+  // Handle Inputs
+  const handleInput = (event) => {
+    setUser({...user, [event.target.name]:event.target.value});
+  }
+
+  // Handle Submit
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+    const response = await fetch("/register/university", {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body:JSON.stringify({uname:user.uname, universityCode:user.universityCode, email:user.email, password:user.password})
+
+    })
+    const json = await response.json()
+    console.log(json);
+
+    if(!json.success) {
+      alert("Enter Valid Credentials")
+    }
+    if(json.success) {
+      history.push('/university_signin');
+    }
+    
+ };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -59,7 +78,7 @@ export default function UniversitySignup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} method="POST" sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <TextField
@@ -70,6 +89,8 @@ export default function UniversitySignup() {
                   id="uname"
                   label="University Name"
                   autoFocus
+                  value={user.uname}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12} >
@@ -80,6 +101,8 @@ export default function UniversitySignup() {
                   label="University Code"
                   name="universityCode"
                   autoComplete="universityCode"
+                  value={user.universityCode}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -90,6 +113,8 @@ export default function UniversitySignup() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={user.email}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -101,6 +126,8 @@ export default function UniversitySignup() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={user.password}
+                  onChange={handleInput}
                 />
               </Grid>
               <Grid item xs={12}>

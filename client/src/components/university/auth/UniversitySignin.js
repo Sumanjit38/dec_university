@@ -13,33 +13,53 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TeacherSignup from './UniversitySignup'
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { useState } from 'react';
+import {useHistory} from 'react-router-dom';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 export default function UniversitySignin() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+
+  let history = useHistory()
+  const [user, setUser] = useState({
+    email : "",
+    password : "",
+  });
+
+    // Handle Inputs
+    const handleInput = (event) => {
+      //let name = event.target.name;
+      //let value = event.target.value;
+  
+      setUser({...user, [event.target.name]:event.target.value});
+    }
+  
+    // Handle Submit
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const response = await fetch("/register/university-login", {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body:JSON.stringify({email:user.email, password:user.password})
+  
+      })
+      const json = await response.json()
+      console.log(json);
+  
+      if(!json.success) {
+        alert("Enter Valid Credentials")
+      }
+      if(json.success) {
+        localStorage.setItem("authToken", json.authToken);
+        console.log(localStorage.getItem("authToken"))
+        history.push('/university_dashboard');
+      }
+      
+   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -69,6 +89,7 @@ export default function UniversitySignin() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleInput}
             />
             <TextField
               margin="normal"
@@ -79,6 +100,7 @@ export default function UniversitySignin() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleInput}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
