@@ -24,6 +24,8 @@ import TeacherDashboard from './components/teacher/pages/TeacherDashboard'
 import StudentDashboard from './components/student/pages/StudentDashboard'
 import StaffDashboard from './components/staff/pages/StaffDashboard'
 import UniversityDashboard from './components/university/pages/UniversityDashboard'
+import TeacherStudent from "./components/teacherStudent/pages/TeacherDashboard"
+import Marks from "./components/marks/pages/TeacherDashboard"
 
 function App() {
   return (
@@ -41,7 +43,7 @@ function App() {
           <Route exact path='/university_signin' component={UniversitySignin} />
           <Route exact path='/university_signup' component={UniversitySignup} />
           <Route exact path='/teacher_signin' component={TeacherSignin} />
-          
+          <Route exact path="/marks" component={Marks} />
           <Route exact path='/teacher_signup' component={TeacherSignup} />
           <Route exact path='/student_signin' component={StudentSignin} />
           <Route exact path='/student_signup' component={StudentSignup} />
@@ -49,6 +51,7 @@ function App() {
           <Route exact path='/staff_signup' component={StaffSignup} />
           <Route exact path='/contact' component={Contact} />
           <Route exact path='/teacher_dashboard' component={TeacherDashboard} />
+          <Route exact path='/students' component={TeacherStudent} />
           <Route exact path='/student_dashboard' component={StudentDashboard} />
           <Route exact path='/staff_dashboard' component={StaffDashboard} />
           <Route exact path='/university_dashboard' component={UniversityDashboard} />

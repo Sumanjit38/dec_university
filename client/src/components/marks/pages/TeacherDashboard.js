@@ -3,26 +3,38 @@ import "./TeacherDashboard.css";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
-import { useHistory } from "react-router-dom";
+import { Button, TextField } from "@mui/material";
 
-const SideNavBar = () => {
+const Marks = () => {
   const [isExpanded, setExpendState] = useState(false);
   const [agGridAPI, setAgGridAPI] = useState(null);
   const [agGridColumnAPI, setAgGridColumnAPI] = useState(null);
   const [subjects, setSubjects] = useState([
-	{
-		sem: 1,
-		name: "Data Structures",
-		students: 40,
-		department: "Computer Science"
-	},
-	{
-		sem: 2,
-		name: "Algorithm",
-		students: 50,
-		department: "Computer Science"
-	},
-  ])
+    {
+      sem: 1,
+      name: "Data Structures",
+      students: 40,
+      department: "Computer Science",
+      student_name: "Sumanjit Kuity",
+      roll: "T91/CSE/2002",
+    },
+    {
+      sem: 1,
+      name: "Algorithm",
+      students: 50,
+      department: "Computer Science",
+      student_name: "Chirag Banerjee",
+      roll: "T91/CSE/2003",
+    },
+    {
+      sem: 1,
+      name: "Algorithm",
+      students: 50,
+      department: "Computer Science",
+      student_name: "Chirag Banerjee",
+      roll: "T91/CSE/2004",
+    },
+  ]);
   const agGridRef = useRef(null);
   const handleAgGridReady = (params) => {
     // eslint-disable-next-line no-unused-vars
@@ -71,11 +83,8 @@ const SideNavBar = () => {
       icon: "icons/settings.svg",
     },
   ];
-  const history = useHistory();
 
-  const handleSeeDetailsClick = () => {
-		history.push("/students");
-  };
+  const handleSeeDetailsClick = () => {};
 
   return (
     <div style={{ display: "flex" }}>
@@ -142,75 +151,51 @@ const SideNavBar = () => {
           />
         </div>
       </div>
-	  <div className="ag-theme-alpine" style={{ height: "500px", width: "100%" }}>
-      <AgGridReact
-        ref={agGridRef}
-        rowData={subjects}
-        onGridReady={handleAgGridReady}
-        onFirstDataRendered={handleFirstDataRendered}
-        animateRows
-        paginationPageSize={6}
-        defaultColDef={{
-          filter: "agTextColumnFilter",
-          floatingFilter: true,
-          resizable: true,
-          //floatingFilterComponentParams: { suppressFilterButton: true }
-        }}
-        enableCellChangeFlash={true}
-        defaultColGroupDef={{ marryChildren: true }}
-        rowSelection={"single"}
-      >
-		<AgGridColumn
-          field="department"
-          headerName="Department"
-          //suppressSizeToFit
-          //checkboxSelection={true}
-          //floatingFilterComponentParams={{ suppressFilterButton: true }}
-          // floatingFilterComponentParams={{
-          // 	suppressFilterButton: true
-          // }}
-          onCellClicked={handleSeeDetailsClick}
-          cellStyle={() => {
-            return { cursor: "pointer" };
-          }}
-        ></AgGridColumn>
-        <AgGridColumn
-          field="sem"
-          headerName="Semester"
-          //suppressSizeToFit
-          //floatingFilterComponentParams={{ suppressFilterButton: true }}
-          onCellClicked={handleSeeDetailsClick}
-          cellStyle={() => {
-            return { cursor: "pointer" };
-          }}
-         // cellRendererFramework="hanldeTextCellRenderer"
-        ></AgGridColumn>
-        <AgGridColumn
-          field="name"
-          headerName="Subject"
-          //suppressSizeToFit
-          //floatingFilterComponentParams={{ suppressFilterButton: true }}
-          onCellClicked={handleSeeDetailsClick}
-          cellStyle={() => {
-            return { cursor: "pointer" };
-          }}
-        ></AgGridColumn>
-        <AgGridColumn
-          field="students"
-          headerName="Student Count"
-          //suppressSizeToFit
-          // floatingFilterComponentParams={{ suppressFilterButton: true }}
-          // cellRenderer="handleDateCellRenderer"
-          // filter={false}
-          onCellClicked={handleSeeDetailsClick}
-          cellStyle={() => {
-            return { cursor: "pointer" };
-          }}
-        ></AgGridColumn>
-      </AgGridReact>
-	  </div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{ display: "flex", gap: 20, marginLeft: 100, marginTop: 50 }}
+        >
+          <div style={{ marginTop: 15 }}>Name:</div>
+          <div>
+            <TextField label="marks" value={"Sumanjit Kuity"} disabled style={{ marginLeft: 125 }} />
+          </div>
+        </div>
+        <div
+          style={{ display: "flex", gap: 20, marginLeft: 100, marginTop: 50 }}
+        >
+          <div style={{ marginTop: 15 }}>Roll:</div>
+          <div>
+            <TextField label="Roll" value={"T91/CSE/2002"} disabled style={{ marginLeft: 140 }}/>
+          </div>
+        </div>
+        <div
+          style={{ display: "flex", gap: 20, marginLeft: 100, marginTop: 50 }}
+        >
+          <div style={{ marginTop: 15 }}>Semester:</div>
+          <div>
+            <TextField label="Semester" value={"1"} disabled style={{ marginLeft: 100 }} />
+          </div>
+        </div>
+        <div
+          style={{ display: "flex", gap: 20, marginLeft: 100, marginTop: 50 }}
+        >
+          <div style={{ marginTop: 15 }}>Department:</div>
+          <div>
+            <TextField label="Department" value={"Computer Science"} disabled style={{ marginLeft: 80 }} />
+          </div>
+        </div>
+        <div
+          style={{ display: "flex", gap: 20, marginLeft: 100, marginTop: 50 }}
+        >
+          <div style={{ marginTop: 15 }}>Add Marks:</div>
+          <div>
+            <TextField label="marks" style={{ marginLeft: 90 }}/>
+          </div>
+        </div>
+        <Button sx={{ width: 200 }} style={{ marginLeft: 290, marginTop: 50 }} onClick={() => alert("Succesfully Added Marks")} color="primary" variant="contained">Submit</Button>
+      </div>
     </div>
   );
 };
 
-export default SideNavBar;
+export default Marks;

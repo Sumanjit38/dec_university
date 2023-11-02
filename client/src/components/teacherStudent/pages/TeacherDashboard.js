@@ -3,9 +3,9 @@ import "./TeacherDashboard.css";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-const SideNavBar = () => {
+const TeacherStudent = () => {
   const [isExpanded, setExpendState] = useState(false);
   const [agGridAPI, setAgGridAPI] = useState(null);
   const [agGridColumnAPI, setAgGridColumnAPI] = useState(null);
@@ -14,13 +14,25 @@ const SideNavBar = () => {
 		sem: 1,
 		name: "Data Structures",
 		students: 40,
-		department: "Computer Science"
+		department: "Computer Science",
+    student_name: "Sumanjit Kuity",
+    roll: "T91/CSE/2002"
 	},
 	{
-		sem: 2,
+		sem: 1,
 		name: "Algorithm",
 		students: 50,
-		department: "Computer Science"
+		department: "Computer Science",
+    student_name: "Chirag Banerjee",
+    roll: "T91/CSE/2003"
+	},
+  {
+		sem: 1,
+		name: "Algorithm",
+		students: 50,
+		department: "Computer Science",
+    student_name: "Chirag Banerjee",
+    roll: "T91/CSE/2004"
 	},
   ])
   const agGridRef = useRef(null);
@@ -72,9 +84,8 @@ const SideNavBar = () => {
     },
   ];
   const history = useHistory();
-
   const handleSeeDetailsClick = () => {
-		history.push("/students");
+    history.push("/marks");
   };
 
   return (
@@ -160,6 +171,34 @@ const SideNavBar = () => {
         defaultColGroupDef={{ marryChildren: true }}
         rowSelection={"single"}
       >
+        <AgGridColumn
+          field="roll"
+          headerName="Roll"
+          //suppressSizeToFit
+          //checkboxSelection={true}
+          //floatingFilterComponentParams={{ suppressFilterButton: true }}
+          // floatingFilterComponentParams={{
+          // 	suppressFilterButton: true
+          // }}
+          onCellClicked={handleSeeDetailsClick}
+          cellStyle={() => {
+            return { cursor: "pointer" };
+          }}
+        ></AgGridColumn>
+        <AgGridColumn
+          field="student_name"
+          headerName="Student Name"
+          //suppressSizeToFit
+          //checkboxSelection={true}
+          //floatingFilterComponentParams={{ suppressFilterButton: true }}
+          // floatingFilterComponentParams={{
+          // 	suppressFilterButton: true
+          // }}
+          onCellClicked={handleSeeDetailsClick}
+          cellStyle={() => {
+            return { cursor: "pointer" };
+          }}
+        ></AgGridColumn>
 		<AgGridColumn
           field="department"
           headerName="Department"
@@ -195,22 +234,10 @@ const SideNavBar = () => {
             return { cursor: "pointer" };
           }}
         ></AgGridColumn>
-        <AgGridColumn
-          field="students"
-          headerName="Student Count"
-          //suppressSizeToFit
-          // floatingFilterComponentParams={{ suppressFilterButton: true }}
-          // cellRenderer="handleDateCellRenderer"
-          // filter={false}
-          onCellClicked={handleSeeDetailsClick}
-          cellStyle={() => {
-            return { cursor: "pointer" };
-          }}
-        ></AgGridColumn>
       </AgGridReact>
 	  </div>
     </div>
   );
 };
 
-export default SideNavBar;
+export default TeacherStudent;
